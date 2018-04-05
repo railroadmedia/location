@@ -15,6 +15,7 @@ class LocationService
     CONST LATITUDE_SESSION_KEY = 'ip-location-latitude';
     CONST LONGITUDE_SESSION_KEY = 'ip-location-longitude';
     CONST CITY_SESSION_KEY = 'ip-location-city';
+    CONST COUNTRY_CODE_SESSION_KEY = 'ip-location-country-code';
 
     public function __construct(Store $session)
     {
@@ -81,6 +82,17 @@ class LocationService
         return $this->session->get($this->getClientIp() . self::CITY_SESSION_KEY);
     }
 
+    public function getCurrency()
+    {
+        if (!$this->session->has($this->getClientIp() . self::COUNTRY_CODE_SESSION_KEY)) {
+            $this->requestAndStoreLocation();
+        }
+
+        $currencies = json_decode(file_get_contents(__DIR__ . '/../../data/currencies.json'), true);
+
+        return $currencies[strtoupper($this->session->get($this->getClientIp() . self::COUNTRY_CODE_SESSION_KEY))];
+    }
+
     /**
      * Store on the session the country, region, latitude, longitude and city for the IP address
      */
@@ -104,6 +116,7 @@ class LocationService
             $this->session->put($ip . self::REGION_SESSION_KEY, $data[ConfigService::$apiDetails[ConfigService::$activeAPI]['regionNameKey']]);
             $this->session->put($ip . self::LATITUDE_SESSION_KEY, $data[ConfigService::$apiDetails[ConfigService::$activeAPI]['latitudeKey']]);
             $this->session->put($ip . self::LONGITUDE_SESSION_KEY, $data[ConfigService::$apiDetails[ConfigService::$activeAPI]['longitudeKey']]);
+            $this->session->put($ip . self::COUNTRY_CODE_SESSION_KEY, $data[ConfigService::$apiDetails[ConfigService::$activeAPI]['countryCodeKey']]);
             if (array_key_exists('cityKey', ConfigService::$apiDetails[ConfigService::$activeAPI])) {
                 $this->session->put($ip . self::CITY_SESSION_KEY, $data[ConfigService::$apiDetails[ConfigService::$activeAPI]['cityKey']]);
             }

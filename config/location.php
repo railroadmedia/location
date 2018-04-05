@@ -9,6 +9,7 @@ return [
             'freegeoip.net' => [
                 'url' => 'http://freegeoip.net/json/',
                 'countryKey' => 'country_name',
+                'countryCodeKey' => 'country_code',
                 'regionNameKey' => 'region_name',
                 'latitudeKey' => 'latitude',
                 'longitudeKey' => 'longitude'
@@ -16,6 +17,7 @@ return [
             'ip-api.com' =>[
                 'url' => 'http://ip-api.com/json/',
                 'countryKey' => 'country',
+                'countryCodeKey' => 'countryCode',
                 'regionNameKey' => 'regionName',
                 'latitudeKey' => 'lat',
                 'longitudeKey' => 'lon',
