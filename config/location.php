@@ -25,7 +25,25 @@ return [
             ],
         ],
 
-    'country_list' => [
+    'country_regions' => [
+        'Canada' => [
+            'Alberta',
+            'British Columbia',
+            'Manitoba',
+            'New Brunswick',
+            'Newfoundland And Labrador',
+            'Northwest Territories',
+            'Nova Scotia',
+            'Nunavut',
+            'Ontario',
+            'Prince Edward Island',
+            'Quebec',
+            'Saskatchewan',
+            'Yukon',
+        ],
+    ],
+
+    'countries' => [
         'United States',
         'Canada',
         'United Kingdom',

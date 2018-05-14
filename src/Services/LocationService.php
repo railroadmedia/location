@@ -141,8 +141,20 @@ class LocationService
         return explode(',', $ip)[0] ?? '';
     }
 
-    public static function countryList()
+    /**
+     * @return array
+     */
+    public static function countries()
     {
-        return config('location.country_list');
+        return config('location.countries', []);
+    }
+
+    /**
+     * @param $country
+     * @return array
+     */
+    public static function countryRegions($country)
+    {
+        return config('location.country_regions')[$country] ?? [];
     }
 }
