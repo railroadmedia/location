@@ -140,4 +140,9 @@ class LocationService
         }
         return explode(',', $ip)[0] ?? '';
     }
+
+    public static function countryList()
+    {
+        return config('location.country_list');
+    }
 }
