@@ -158,8 +158,8 @@ class LocationService
         return config('location.country_regions')[$country] ?? [];
     }
     /**
-     * @param $country
-     * @return array
+     * @param $countryName
+     * @return string
      */
     public static function countryCode($countryName)
     {
