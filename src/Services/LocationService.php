@@ -163,6 +163,6 @@ class LocationService
      */
     public static function countryCode($countryName)
     {
-        return array_reverse(config('location.countries'))[$countryName] ?? '';
+        return array_flip(config('location.countries'))[$countryName] ?? '';
     }
 }
