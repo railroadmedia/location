@@ -90,7 +90,7 @@ class LocationService
 
         $currencies = json_decode(file_get_contents(__DIR__ . '/../../data/currencies.json'), true);
 
-        return $currencies[strtoupper($this->session->get($this->getClientIp() . self::COUNTRY_CODE_SESSION_KEY))];
+        return $currencies[strtoupper($this->session->get($this->getClientIp() . self::COUNTRY_CODE_SESSION_KEY))] ?? null;
     }
 
     /**
