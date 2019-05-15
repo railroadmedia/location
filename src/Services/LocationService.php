@@ -101,6 +101,10 @@ class LocationService
         $ip = $this->getClientIp();
         $apiUrl = ConfigService::$apiDetails[ConfigService::$activeAPI]['url'] . $ip;
 
+        if (empty($ip)) {
+            return;
+        }
+
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $apiUrl);
         curl_setopt($ch, CURLOPT_HEADER, false);
