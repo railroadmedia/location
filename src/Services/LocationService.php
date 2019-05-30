@@ -5,7 +5,6 @@ namespace Railroad\Location\Services;
 
 use Illuminate\Session\Store;
 
-
 class LocationService
 {
     private $session;
@@ -135,13 +134,19 @@ class LocationService
         if (ConfigService::$environment == 'development') {
             return ConfigService::$testingIP;
         }
-        if (!empty(request()->server('HTTP_CLIENT_IP'))) {
+        if (!empty(request()->server('HTTP_CF_CONNECTING_IP'))) {
+            $ip = request()->server('HTTP_CF_CONNECTING_IP');
+        }
+        elseif (!empty(request()->server('HTTP_CLIENT_IP'))) {
             $ip = request()->server('HTTP_CLIENT_IP');
-        } elseif (!empty(request()->server('HTTP_X_FORWARDED_FOR'))) {
+        }
+        elseif (!empty(request()->server('HTTP_X_FORWARDED_FOR'))) {
             $ip = request()->server('HTTP_X_FORWARDED_FOR');
-        } else {
+        }
+        else {
             $ip = request()->server('REMOTE_ADDR');
         }
+
         return explode(',', $ip)[0] ?? '';
     }
 
