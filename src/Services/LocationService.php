@@ -104,6 +104,12 @@ class LocationService
             return;
         }
 
+        if (!empty(ConfigService::$apiDetails[ConfigService::$activeAPI]['apiKey']) &&
+            ConfigService::$activeAPI == 'ipdata.co') {
+
+            $apiUrl = ConfigService::$apiDetails[ConfigService::$activeAPI]['url'] . '?api-key=' . ConfigService::$apiDetails[ConfigService::$activeAPI]['apiKey'];
+        }
+
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $apiUrl);
         curl_setopt($ch, CURLOPT_HEADER, false);

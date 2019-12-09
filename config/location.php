@@ -6,6 +6,15 @@ return [
     'active_api' => 'ip-api.com',
     'api' =>
         [
+            'ipdata.co' => [
+                'url' => 'https://api.ipdata.co/',
+                'apiKey' => env('IP_DATA_API_KEY'),
+                'countryKey' => 'country_name',
+                'countryCodeKey' => 'country_code',
+                'regionNameKey' => 'region_name',
+                'latitudeKey' => 'latitude',
+                'longitudeKey' => 'longitude',
+            ],
             'freegeoip.net' => [
                 'url' => 'http://freegeoip.net/json/',
                 'countryKey' => 'country_name',
