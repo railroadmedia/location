@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'disabled' => env('DISABLE_LOCATION', false),
     'environment' => 'development',
     'testing_ip' => '70.69.219.138',
     'active_api' => 'ip-api.com',

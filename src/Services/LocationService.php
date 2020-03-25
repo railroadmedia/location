@@ -97,6 +97,10 @@ class LocationService
      */
     public function requestAndStoreLocation()
     {
+        if (config('location.disabled', false)) {
+            return;
+        }
+
         $ip = $this->getClientIp();
         $apiUrl = ConfigService::$apiDetails[ConfigService::$activeAPI]['url'] . $ip;
 

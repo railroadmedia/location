@@ -1,10 +1,10 @@
 {
-    "name": "railroad/location",
-    "type": "library",
-    "description": "Location service",
-    "minimum-stability": "dev",
+  "name": "railroad/location",
+  "type": "library",
+  "description": "Location service",
+  "minimum-stability": "dev",
   "prefer-stable": true,
- "require": {
+  "require": {
     "php": "~7",
     "laravel/framework": "5.6.*",
     "guzzlehttp/guzzle": "~6.0"
