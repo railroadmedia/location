@@ -2,8 +2,11 @@
 
 namespace Railroad\Location\Services;
 
-
 use Illuminate\Session\Store;
+//use \League\ISO3166\ISO3166DataProvider;
+use League\ISO3166\ISO3166;
+use Monarobase\CountryList\CountryListFacade;
+//use Sokil\IsoCodes\IsoCodesFactory;
 
 class LocationService
 {
@@ -16,9 +19,25 @@ class LocationService
     CONST CITY_SESSION_KEY = 'ip-location-city';
     CONST COUNTRY_CODE_SESSION_KEY = 'ip-location-country-code';
 
-    public function __construct(Store $session)
+    /**
+     * @var ISO3166
+     */
+    private $ISO3166;
+
+//    /**
+//     * @var IsoCodesFactory
+//     */
+//    private $isoCodesFactory;
+
+    public function __construct(
+        Store $session,
+        ISO3166 $ISO3166
+        //IsoCodesFactory $isoCodesFactory
+    )
     {
         $this->session = $session;
+        $this->ISO3166 = $ISO3166;
+        //$this->isoCodesFactory = $isoCodesFactory;
     }
 
     /** If the country not exist on the session call the method that store data on session and return the country
@@ -158,30 +177,5 @@ class LocationService
         }
 
         return explode(',', $ip)[0] ?? '';
-    }
-
-    /**
-     * @return array
-     */
-    public static function countries()
-    {
-        return config('location.countries', []);
-    }
-
-    /**
-     * @param $country
-     * @return array
-     */
-    public static function countryRegions($country)
-    {
-        return config('location.country_regions')[$country] ?? [];
-    }
-    /**
-     * @param $countryName
-     * @return string
-     */
-    public static function countryCode($countryName)
-    {
-        return array_flip(config('location.countries'))[$countryName] ?? '';
     }
 }

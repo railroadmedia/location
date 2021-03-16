@@ -4,6 +4,7 @@ namespace Railroad\Location\Providers;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Railroad\Location\Services\ConfigService;
+use Sokil\IsoCodes\IsoCodesFactory;
 
 class LocationServiceProvider extends ServiceProvider
 {
@@ -33,13 +34,14 @@ class LocationServiceProvider extends ServiceProvider
         ConfigService::$activeAPI = config('location.active_api');
     }
 
-    /**
-     * Register the application services.
-     *
-     * @return void
-     */
     public function register()
     {
+        $this->app->singleton(IsoCodesFactory::class, function ($app) {
+            return new IsoCodesFactory(null, null);
+        });
 
+        $this->mergeConfigFrom(
+            __DIR__ . '/../../config/location.php', 'location'
+        );
     }
 }
