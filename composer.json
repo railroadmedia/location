@@ -8,10 +8,8 @@
     "php": "~7",
     "laravel/framework": "5.6.*",
     "guzzlehttp/guzzle": "~6.0",
-    "monarobase/country-list": "^2",
     "league/iso3166": "^3.0.0",
     "sokil/php-isocodes": "^3.0",
-    "umpirsky/country-list": "^2.0.6"
   },
   "require-dev": {
     "phpunit/phpunit": "~7.0",

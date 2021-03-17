@@ -13,7 +13,7 @@ class CountryListService
         return LocationReferenceService::countriesMasterList();
     }
 
-    public static function allWeCanShipTo()
+        public static function allWeCanShipTo()
     {
         return LocationReferenceService::countriesListCreator(true, false);
     }
@@ -33,11 +33,11 @@ class CountryListService
         $unableToShipTo = [];
         $unableToShipToAlpha2Only = config('location.countries-unable-to-ship-to', []);
 
-        foreach($unableToShipToAlpha2Only as $alpha2){
-            $allCountries = LocationReferenceService::countriesMasterList();
+        $allCountries = LocationReferenceService::countriesMasterList();
 
+        foreach($unableToShipToAlpha2Only as $alpha2){
             $name = LocationReferenceService::name($alpha2);
-//
+
             $unableToShipTo[$alpha2] = $name;
         }
 

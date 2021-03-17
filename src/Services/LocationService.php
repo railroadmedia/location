@@ -3,10 +3,6 @@
 namespace Railroad\Location\Services;
 
 use Illuminate\Session\Store;
-//use \League\ISO3166\ISO3166DataProvider;
-use League\ISO3166\ISO3166;
-use Monarobase\CountryList\CountryListFacade;
-//use Sokil\IsoCodes\IsoCodesFactory;
 
 class LocationService
 {
@@ -19,25 +15,9 @@ class LocationService
     CONST CITY_SESSION_KEY = 'ip-location-city';
     CONST COUNTRY_CODE_SESSION_KEY = 'ip-location-country-code';
 
-    /**
-     * @var ISO3166
-     */
-    private $ISO3166;
-
-//    /**
-//     * @var IsoCodesFactory
-//     */
-//    private $isoCodesFactory;
-
-    public function __construct(
-        Store $session,
-        ISO3166 $ISO3166
-        //IsoCodesFactory $isoCodesFactory
-    )
+    public function __construct(Store $session)
     {
         $this->session = $session;
-        $this->ISO3166 = $ISO3166;
-        //$this->isoCodesFactory = $isoCodesFactory;
     }
 
     /** If the country not exist on the session call the method that store data on session and return the country

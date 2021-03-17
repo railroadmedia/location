@@ -1,7 +1,6 @@
 <?php
 namespace Railroad\Location\Services;
 
-use Monarobase\CountryList\CountryListFacade;
 use League\ISO3166\ISO3166;
 use Sokil\IsoCodes\Database\Countries\Country;
 use Sokil\IsoCodes\IsoCodesFactory;
@@ -9,7 +8,6 @@ use Sokil\IsoCodes\IsoCodesFactory;
 class LocationReferenceService
 {
     public static $services = [
-        'monarobase' => 'monarobase',
         'league' => 'league',
         'sokil' => 'sokil',
     ];
@@ -174,9 +172,10 @@ class LocationReferenceService
             return self::countriesMasterList();
         }
 
-        if($service == self::$services['monarobase']){
-            return CountryListFacade::getList('en', 'php');
-        }
+        // --- enable this by requiring monarobase/country-list in composer.json ---
+        //if($service == self::$services['monarobase']){
+        //    return \Monarobase\CountryList\CountryListFacade::getList('en', 'php');
+        //}
 
         if($service == self::$services['sokil']){
             /** @var Country[] $countries */
