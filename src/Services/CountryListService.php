@@ -32,19 +32,12 @@ class CountryListService
     {
         $unableToShipTo = [];
         $unableToShipToAlpha2Only = config('location.countries-unable-to-ship-to', []);
-//        $countriesRequiringNameAlteration = config('location.countries-name-altered');
 
         foreach($unableToShipToAlpha2Only as $alpha2){
             $allCountries = LocationReferenceService::countriesMasterList();
 
             $name = LocationReferenceService::name($alpha2);
 //
-//            $alterNameRequired = array_key_exists($alpha2, $countriesRequiringNameAlteration);
-//
-//            if($alterNameRequired){
-//                $name = $countriesRequiringNameAlteration[$alpha2];
-//            }
-
             $unableToShipTo[$alpha2] = $name;
         }
 
