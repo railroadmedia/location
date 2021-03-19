@@ -587,3 +587,12 @@ array (
   'CA-YT' => 'Yukon Territory',
 )
 ```
+
+## Countries We Cannot Ship To
+
+check for updates in these two places:
+1. The "ePost Global (PPDC, PPT)" column at https://www.epostglobalshipping.com/imp-serviceupdates.html
+1. USPS list of sanctioned countries at https://about.usps.com/publications/pub699/pub699_online_017.htm
+
+Add the ISO 3166-1 alpha-2 (two letter) country code for any countries to the "countries-unable-to-ship-to" array in *config/location.php* as needed.
+

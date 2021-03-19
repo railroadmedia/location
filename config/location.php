@@ -34,7 +34,12 @@ return [
         ],
     ],
 
-    'countries-unable-to-ship-to' => [ // check for updates at epostglobalshipping.com/imp-serviceupdates.html
+    /*
+     * check for updates in these two places:
+     * 1. The "ePost Global (PPDC, PPT)" column at https://www.epostglobalshipping.com/imp-serviceupdates.html
+     * 2. USPS list of sanctioned countries at https://about.usps.com/publications/pub699/pub699_online_017.htm
+     */
+    'countries-unable-to-ship-to' => [
         'BM', # Bermuda
         'BT', # Bhutan
         'BW', # Botswana
@@ -46,14 +51,29 @@ return [
         'TJ', # Tajikistan
         'YE', # Yemen
         'ZW', # Zimbabwe
-        'BO', # Bolivia (Plurinational State of)    referred to as "Bolivia" at shipping status source
-        'BN', # Brunei Darussalam                   referred to as "Brunei" at shipping status source
-        'SS', # South Sudan                         referred to as "Sudan(South)" at shipping status source
-        'SY', # Syrian Arab Republic (the)          referred to as "Syria (SAR)" at shipping status source
+
+        'BO', # Bolivia (Plurinational State of)    referred to as "Bolivia" at epostglobalshipping.com
+        'BN', # Brunei Darussalam                   referred to as "Brunei" at epostglobalshipping.com
+        'SS', # South Sudan                         referred to as "Sudan(South)" at epostglobalshipping.com
+        'SY', # Syrian Arab Republic (the)          referred to as "Syria (SAR)" at epostglobalshipping.com, also on USPS sanctioned list
+
+        'CU', # Cuba,                                           as per USPS sanctions list
+        'IR', # Iran (Islamic Republic of),                     as per USPS sanctions list
+        'KP', # Korea (the Democratic People's Republic of),    as per USPS sanctions list
+        'SD', # Sudan (the),                                    as per USPS sanctions list
     ],
 
+    // If we need to prohibit physical orders by region, we'll need this.
+//    'regions-no-shipping-by-country' => [
+//        'UA' => [ # Ukraine
+//            'UA-43', # 'Avtonomna Respublika Krym', as per USPS sanctions list
+//        ],
+//    ],
+
     'countries-name-altered' => [
-        'TW' => 'Taiwan'
+        'TW' => 'Taiwan',
+        'US' => 'United States',
+        'UK' => 'United Kingdom',
     ],
 
     'common-at-top' => [
