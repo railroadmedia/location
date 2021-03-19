@@ -73,7 +73,7 @@ return [
     'countries-name-altered' => [
         'TW' => 'Taiwan',
         'US' => 'United States',
-        'UK' => 'United Kingdom',
+        'GB' => 'United Kingdom',
     ],
 
     'common-at-top' => [
