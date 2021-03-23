@@ -34,12 +34,9 @@ return [
         ],
     ],
 
-    /*
-     * check for updates in these two places:
-     * 1. The "ePost Global (PPDC, PPT)" column at https://www.epostglobalshipping.com/imp-serviceupdates.html
-     * 2. USPS list of sanctioned countries at https://about.usps.com/publications/pub699/pub699_online_017.htm
-     */
-    'countries-unable-to-ship-to' => [
+    'countries-unable-to-ship-to' => [ // See README for instructions on updating this list.
+
+        // as per the "ePost Global (PPDC, PPT)" column at https://www.epostglobalshipping.com/imp-serviceupdates.html
         'BM', # Bermuda
         'BT', # Bhutan
         'BW', # Botswana
@@ -51,16 +48,41 @@ return [
         'TJ', # Tajikistan
         'YE', # Yemen
         'ZW', # Zimbabwe
-
         'BO', # Bolivia (Plurinational State of)    referred to as "Bolivia" at epostglobalshipping.com
         'BN', # Brunei Darussalam                   referred to as "Brunei" at epostglobalshipping.com
         'SS', # South Sudan                         referred to as "Sudan(South)" at epostglobalshipping.com
-        'SY', # Syrian Arab Republic (the)          referred to as "Syria (SAR)" at epostglobalshipping.com, also on USPS sanctioned list
+        'SY', # Syrian Arab Republic (the)          referred to as "Syria (SAR)" at epostglobalshipping.com
 
-        'CU', # Cuba,                                           as per USPS sanctions list
-        'IR', # Iran (Islamic Republic of),                     as per USPS sanctions list
-        'KP', # Korea (the Democratic People's Republic of),    as per USPS sanctions list
-        'SD', # Sudan (the),                                    as per USPS sanctions list
+        // as per USPS list of sanctioned countries at https://about.usps.com/publications/pub699/pub699_online_017.htm
+        'CU', # Cuba
+        'IR', # Iran (Islamic Republic of)
+        'KP', # Korea (the Democratic People's Republic of)
+        'SD', # Sudan (the)
+
+        // as per https://about.usps.com/newsroom/service-alerts/international/welcome.htm
+        'BW', # Botswana
+        'GF', # French Guiana
+        'MU', # Mauritius
+        'SC', # Seychelles
+        'PF', # French Polynesia
+        'MN', # Mongolia
+        'SS', # South Sudan
+        'TD', # Chad
+        'GP', # Guadeloupe
+        'MM', # Myanmar
+        'TJ', # Tajikistan
+        'CU', # Cuba
+        'TL', # Timor-Leste
+        'ER', # Eritrea
+        'LS', # Lesotho
+        'TM', # Turkmenistan
+        'MQ', # Martinique
+        'WS', # Samoa
+        'YE', # Yemen
+        'LA', # Lao People's Democratic Republic    # refered to as "Laos" at USPS source
+        'RE', # Réunion                             # refered to as "Reunion (Bourbon)" at USPS source
+        'PM', # Saint Pierre and Miquelon           # refered to as "Saint Pierre and Miquelon (Miquelon)" at USPS source
+        'SZ', # Eswatini                            # refered to as "Eswatini (Swaziland)" at USPS source
     ],
 
     // If we need to prohibit physical orders by region, we'll need this.
