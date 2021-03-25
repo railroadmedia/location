@@ -5,29 +5,42 @@ Table of Contents
 -----------
 
 - [railroad\/location](#railroad--location)
-  * [Table of Contents](#table-of-contents)
-  * [TL;DR:](#tl-dr-)
-  * [Before Use](#before-use)
-    + [Installation](#installation)
-    + [Configuration](#configuration)
-    + [Updating List of Countries We Cannot Ship To](#updating-list-of-countries-we-cannot-ship-to)
-  * [Use](#use)
-    + [Overview of available lists and tools](#overview-of-available-lists-and-tools)
-    + [About examples in detailed sections below](#about-examples-in-detailed-sections-below)
-    + [Lists of countries](#lists-of-countries)
-      - [CountryListService::all()](#countrylistservice--all--)
-      - [CountryListService::verbose()](#countrylistservice--verbose--)
-      - [CountryListService::allWeCanShipTo()](#countrylistservice--allwecanshipto--)
-      - [CountryListService::allWithCommonDuplicatedAtTop()](#countrylistservice--allwithcommonduplicatedattop--)
-      - [CountryListService::allWeCanShipToWithCommonDuplicatedAtTop()](#countrylistservice--allwecanshiptowithcommonduplicatedattop--)
-      - [CountryListService::unableToShipTo()](#countrylistservice--unabletoshipto--)
-    + [Utility Methods](#utility-methods)
-      - [LocationReferenceService::alpha2($name)](#locationreferenceservice--alpha2--name-)
-      - [LocationReferenceService::name($alpha2)](#locationreferenceservice--name--alpha2-)
-      - [LocationReferenceService::currencies($alpha2, $verbose = false)](#locationreferenceservice--currencies--alpha2---verbose---false-)
-      - [LocationReferenceService::regions($alpha2, $returnSimpleArray = true)](#locationreferenceservice--regions--alpha2---returnsimplearray---true-)
-
+    * [Table of Contents](#table-of-contents)
+    * [REVIEW ME](#review-me)
+    * [TL;DR:](#tl-dr-)
+    * [Before Use](#before-use)
+        + [Installation](#installation)
+        + [Configuration](#configuration)
+        + [Updating List of Countries We Cannot Ship To](#updating-list-of-countries-we-cannot-ship-to)
+    * [Use](#use)
+        + [Overview of available lists and tools](#overview-of-available-lists-and-tools)
+        + [About examples in detailed sections below](#about-examples-in-detailed-sections-below)
+        + [Lists of countries](#lists-of-countries)
+            - [CountryListService::all()](#countrylistservice--all--)
+            - [CountryListService::verbose()](#countrylistservice--verbose--)
+            - [CountryListService::allWeCanShipTo()](#countrylistservice--allwecanshipto--)
+            - [CountryListService::allWithCommonDuplicatedAtTop()](#countrylistservice--allwithcommonduplicatedattop--)
+            - [CountryListService::allWeCanShipToWithCommonDuplicatedAtTop()](#countrylistservice--allwecanshiptowithcommonduplicatedattop--)
+            - [CountryListService::unableToShipTo()](#countrylistservice--unabletoshipto--)
+        + [Utility Methods](#utility-methods)
+            - [LocationReferenceService::alpha2($name)](#locationreferenceservice--alpha2--name-)
+            - [LocationReferenceService::name($alpha2)](#locationreferenceservice--name--alpha2-)
+            - [LocationReferenceService::currencies($alpha2, $verbose = false)](#locationreferenceservice--currencies--alpha2---verbose---false-)
+            - [LocationReferenceService::regions($alpha2, $returnSimpleArray = true)](#locationreferenceservice--regions--alpha2---returnsimplearray---true-)
+    * [Issues, Uncertainties, and To-Dos](#issues--uncertainties--and-to-dos)
+        + [Timezone information](#timezone-information)
+        + [Data Hygiene](#data-hygiene)
+    
 <!-- ecotrust-canada.github.io/markdown-toc/ -->
+
+REVIEW ME
+----------------
+
+**Please see notes in [REVIEWME.md](https://github.com/railroadmedia/location/blob/v2.0-/REVIEWME.md).**
+
+Please comment|ask-questions in code or create issues liberally.
+
+Thank you!
 
 
 TL;DR:
@@ -616,3 +629,39 @@ array (
   'CA-YT' => 'Yukon Territory',
 )
 ```
+
+Issues, Uncertainties, and To-Dos
+--------------------------------------------
+
+[comment]: <> (### Missing data for user-defined countries)
+
+[comment]: <> (If using an external package to retrieve information, will user-defined countries' information &#40;set in config&#41; be returned?)
+
+[comment]: <> (Namely, if calling on any feature of package that we're using for getting info about a country &#40;like league/iso3166 and sokil/php-isocodes&#41; if the param passed species an user-defined country, are we successfully prempting the typical call to the 3rd-party package and rather just returning the user-defined info we set in config?)
+
+[comment]: <> (I believe so, but am unsure)
+
+### Timezone information
+
+How to get this? We have something like this on the schedule page for Drumeo, but what does it look like?
+
+Route for schedule page is: GET [/members/schedule](https://drumeo.com/members/schedule) (uses [\App\Http\Controllers\Content\ScheduleController@catalogue](https://github.com/railroadmedia/drumeo/blob/master/laravel/app/Http/Controllers/Content/ScheduleController.php)) ([line 42](https://github.com/railroadmedia/drumeo/blob/3d45018aa6afbc9fd8b4201ddb212c81541e6b76/laravel/app/Http/Controllers/Content/ScheduleController.php#L42) at time or writing)
+
+There are two methods of interest:
+1. [CalendarService@getTimezone](https://github.com/railroadmedia/drumeo/blob/master/laravel/app/legacy_classes/services/CalendarService.php), which gets the timezone from the request, or from the member's record in the database if available. ([line 25](https://github.com/railroadmedia/drumeo/blob/a1593895a570ffc7c4f361cf8f5e2e846b8f69ee/laravel/app/legacy_classes/services/CalendarService.php#L25) at time of writing)
+2. [ScheduleController@timezoneList](https://github.com/railroadmedia/drumeo/blob/master/laravel/app/Http/Controllers/Content/ScheduleController.php), which assembles a nice list of timezones that a user can select from ([line 76](https://github.com/railroadmedia/drumeo/blob/3d45018aa6afbc9fd8b4201ddb212c81541e6b76/laravel/app/Http/Controllers/Content/ScheduleController.php#L76) at time of writing). It uses PHP's [DateTimeZone](https://www.php.net/manual/en/class.datetimezone.php) class.
+
+### Data Hygiene
+
+Currently the database (ex: musora_laravel.ecommerce_addresses) stores a non-standard mix of values for countries (and subdivisions). Ideally it would be standardized. Currently however I don't think any mismatches will break anything. The only matching of country name I believe is in calculating taxes for if the country is "Canada", and that's pretty consistently just called "Canada"—though note that there are 284 addresses with "CAN" as the country.
+
+I'm going to do another check of all automated tests. Last time there were no issues, but changes have been made since then. They're functionally trivial, but it feels like the least I can do. Otherwise I feel like I'd have to go through all functionality, and that is likely not required and thus even more so an unattractive proposition.
+
+### Crimea
+
+Countries we can't ship to are no worries, but there is *one* subdivision (read: province, state, administrative district, etc) that we cannot ship to. This is not addressed currently because the implementation of this package have no provision for differentiating between subdivisions in any country other than Canada. Though, at the moment, it's only one small area, so is not of concern.
+
+### Standardizing names for Canadian Provices
+
+The currently used names and abreviations for Canadian provinces are not standardized. I don't think it will cause any issues, but I think we should ultimately replace the province names with the their ISO 3166-2 codes (ex: "BC" would be "CA-BC" iirc). We would then get the names (ex: "British Columbia") from some service method by supplying the ISO 3166-2 code (ex: "CA-BC"). This would lay the foundation for using subdivision information for all countries (which is available by country-code from the 3rd-party packages we're using).
+
