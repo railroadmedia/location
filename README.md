@@ -95,6 +95,7 @@ Add an alias in your application's *config/app.php* file. Ex:
 
 artisan vendor:publish will publish a location.php file to your application's config/ directory. In there you can specify values to override these default package values. If you do not provide values in your application's config/locations.php, the default in the package's [config/location.php](https://github.com/railroadmedia/location/blob/v2.0-/config/location.php) will be used.
 
+Please note that options in the configuration are generally indexed by the country's ISO 3166-2 ("alpha2") two letter country-code. You can best find these codes generally in the sidebar of the country's Wikipedia page. But, for the "English short name", and for general canonical reference, please refer to the ISO's search tool at [iso.org/obp/ui/#search/code/](https://www.iso.org/obp/ui/#search/code/).  
 
 ### Updating List of Countries We Cannot Ship To
 

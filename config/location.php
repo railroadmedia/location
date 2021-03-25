@@ -93,27 +93,25 @@ return [
 //    ],
 
     'countries-name-altered' => [
-        'TW' => 'Taiwan',
-        'US' => 'United States',
-        'GB' => 'United Kingdom',
+        'TW' => 'Taiwan',           # renamed from "Taiwan (Province of China)"
+        'US' => 'United States',    # renamed from "United States of America (the)"
+        'GB' => 'United Kingdom',   # renamed from "United Kingdom of Great Britain and Northern Ireland (the)"
     ],
 
-    'common-at-top' => [
-        'US',
-        'CA',
-        'GB',
-        'AU',
+    'common-at-top' => [ // for usage example, see CountryListService::allWithCommonDuplicatedAtTop()
+        'US', # United States of America (the)
+        'CA', # Canada
+        'GB', # United Kingdom of Great Britain and Northern Ireland (the)
+        'AU', # Austrailia
     ],
 
     /*
      * Non-standard user-defined entries
      * ---------------------------------
      *
-     * If a country is not represented in ISO 3166, we can add it here. It the same values cannot be assumed to carry
-     * the same designation outside of the scope of this configuration.
-     *
-     * For example, while XK is used by organizations to represent Kosovo, it is not standardized and thus cannot be
-     * guarenteed to have to same meaning elsewhere.
+     * If a country is not represented in ISO 3166, we can add it here. However remember that is not standardized and
+     * thus cannot be assumed to have to same meaning elsewhere. For example, "XK" is used by many—but not
+     * all—organizations to represent Kosovo.
      *
      * "User-assigned code elements are codes at the disposal of users who need to add further names of countries,
      * territories, or other geographical entities to their in-house application of ISO 3166-1, and the ISO 3166/MA will

@@ -24,11 +24,15 @@ Notes about integration and development
 This package is used in the following five repos. Note that one of the five (ecommerce) is also itself used in the other four.
 
 Each of these links is to github's comparison of the feature branch onto it's "source" (I don't know what the technical git terminology for this is tbh):
-    * [ecommerce](https://github.com/railroadmedia/ecommerce/compare/2.4-...2.4-railroad-location-package-update) (note that this is used in all the below items)
-    * [musora](https://github.com/railroadmedia/musora/compare/master...railroad-location-package-update)
-    * [drumeo](https://github.com/railroadmedia/drumeo/compare/master...railroad-location-package-update)
-    * [pianote](https://github.com/railroadmedia/pianote/compare/master...railroad-location-package-update)
-    * [guitareo](https://github.com/railroadmedia/guitareo/compare/master...railroad-location-package-update)
+
+* [js-helper-functions](https://github.com/railroadmedia/js-helper-functions/compare/master...railroad-location-package-update)
+    * node module 
+* [ecommerce](https://github.com/railroadmedia/ecommerce/compare/2.4-...2.4-railroad-location-package-update)
+    * note that—in addition to this requiring the location package—this also is a requirement in the four applications below, which themselves also require the location package.
+* [musora](https://github.com/railroadmedia/musora/compare/master...railroad-location-package-update)
+* [drumeo](https://github.com/railroadmedia/drumeo/compare/master...railroad-location-package-update)
+* [pianote](https://github.com/railroadmedia/pianote/compare/master...railroad-location-package-update)
+* [guitareo](https://github.com/railroadmedia/guitareo/compare/master...railroad-location-package-update)
 
 To test these branches, you can pull them and then run `composer install` as the composer.json (and .lock) are currently configured for the dev branches, and to address the minor dependancy-hell that comes from ecommerce also having the location package as a requirement.
 
