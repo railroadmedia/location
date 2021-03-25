@@ -91,7 +91,7 @@ Add an alias in your application's *config/app.php* file. Ex:
 
 ### Configuration
 
-artisan vendor:publish will publish a location.php file to your application's config/ directory. In there you can specify values to override these default package values. If you do not provide values in your application's config/locations.php, the default in the package's [config/location.php](https://github.com/railroadmedia/location/blob/2.0-/config/location.php) will be used. The relevant arrays will be something like this:
+artisan vendor:publish will publish a location.php file to your application's config/ directory. In there you can specify values to override these default package values. If you do not provide values in your application's config/locations.php, the default in the package's [config/location.php](https://github.com/railroadmedia/location/blob/v2.0-/config/location.php) will be used. The relevant arrays will be something like this:
 
 ```
     'countries-unable-to-ship-to' => [ // check for updates at epostglobalshipping.com/imp-serviceupdates.html
