@@ -30,6 +30,8 @@ Table of Contents
     * [Issues, Uncertainties, and To-Dos](#issues--uncertainties--and-to-dos)
         + [Timezone information](#timezone-information)
         + [Data Hygiene](#data-hygiene)
+        + [Crimea](#crimea)
+        + [Standardizing names for Canadian Provices](#standardizing-names-for-canadian-provices)
     
 <!-- ecotrust-canada.github.io/markdown-toc/ -->
 
@@ -91,65 +93,8 @@ Add an alias in your application's *config/app.php* file. Ex:
 
 ### Configuration
 
-artisan vendor:publish will publish a location.php file to your application's config/ directory. In there you can specify values to override these default package values. If you do not provide values in your application's config/locations.php, the default in the package's [config/location.php](https://github.com/railroadmedia/location/blob/v2.0-/config/location.php) will be used. The relevant arrays will be something like this:
+artisan vendor:publish will publish a location.php file to your application's config/ directory. In there you can specify values to override these default package values. If you do not provide values in your application's config/locations.php, the default in the package's [config/location.php](https://github.com/railroadmedia/location/blob/v2.0-/config/location.php) will be used.
 
-```
-    'countries-unable-to-ship-to' => [ // check for updates at epostglobalshipping.com/imp-serviceupdates.html
-        'BM', # Bermuda
-        'BT', # Bhutan
-        'BW', # Botswana
-        'KY', # Cayman Islands
-        'DM', # Dominica
-        'DO', # Dominican Republic
-        'LY', # Libya
-        'PG', # Papua New Guinea
-        'TJ', # Tajikistan
-        'YE', # Yemen
-        'ZW', # Zimbabwe
-        'BO', # Bolivia (Plurinational State of)    referred to as "Bolivia" at shipping status source
-        'BN', # Brunei Darussalam                   referred to as "Brunei" at shipping status source
-        'SS', # South Sudan                         referred to as "Sudan(South)" at shipping status source
-        'SY', # Syrian Arab Republic (the)          referred to as "Syria (SAR)" at shipping status source
-    ],
-
-    'countries-name-altered' => [
-        'TW' => 'Taiwan'
-    ],
-
-    'common-at-top' => [
-        'US',
-        'CA',
-        'GB',
-        'AU',
-    ],
-
-    /*
-     * Non-standard user-defined entries
-     * ---------------------------------
-     *
-     * If a country is not represented in ISO 3166, we can add it here. It the same values cannot be assumed to carry
-     * the same designation outside of the scope of this configuration.
-     *
-     * For example, while XK is used by organizations to represent Kosovo, it is not standardized and thus cannot be
-     * guarenteed to have to same meaning elsewhere.
-     *
-     * "User-assigned code elements are codes at the disposal of users who need to add further names of countries,
-     * territories, or other geographical entities to their in-house application of ISO 3166-1, and the ISO 3166/MA will
-     * never use these codes in the updating process of the standard. The following alpha-2 codes can be user-assigned:
-     * AA, QM to QZ, XA to XZ, and ZZ."
-     * source: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#User-assigned_code_elements, March 12th 2021
-     * Also see https://en.wikipedia.org/wiki/ISO_3166-1_numeric#User-assigned_code_elements regarding numerics)
-     */
-    'user-defined' => [
-        [
-            'name' => 'Kosovo',
-            'alpha2' => 'XK',
-            'alpha3' => 'XKS',
-            'numeric' => 900,
-            'currency' => ['EUR'],
-        ]
-    ]
-```
 
 ### Updating List of Countries We Cannot Ship To
 
