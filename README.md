@@ -6,46 +6,68 @@ Table of Contents
 
 - [railroad\/location](#railroad--location)
     * [Table of Contents](#table-of-contents)
-    * [REVIEW ME](#review-me)
-    * [TL;DR:](#tl-dr-)
+    * [TL;DR for non-technical users](#tl-dr-for-non-technical-users)
+        + [1. the list of countries that we use](#1-the-list-of-countries-that-we-use)
+        + [2. the list of countries we can't ship to](#2-the-list-of-countries-we-can-t-ship-to)
+        + [3. info about special cases](#3-info-about-special-cases)
+    * [TL;DR for technical users](#tl-dr-for-technical-users)
+    * [Code Review](#code-review)
     * [Before Use](#before-use)
         + [Installation](#installation)
         + [Configuration](#configuration)
         + [Updating List of Countries We Cannot Ship To](#updating-list-of-countries-we-cannot-ship-to)
     * [Use](#use)
         + [Overview of available lists and tools](#overview-of-available-lists-and-tools)
-        + [About examples in detailed sections below](#about-examples-in-detailed-sections-below)
-        + [Lists of countries](#lists-of-countries)
-            - [CountryListService::all()](#countrylistservice--all--)
-            - [CountryListService::verbose()](#countrylistservice--verbose--)
-            - [CountryListService::allWeCanShipTo()](#countrylistservice--allwecanshipto--)
-            - [CountryListService::allWithCommonDuplicatedAtTop()](#countrylistservice--allwithcommonduplicatedattop--)
-            - [CountryListService::allWeCanShipToWithCommonDuplicatedAtTop()](#countrylistservice--allwecanshiptowithcommonduplicatedattop--)
-            - [CountryListService::unableToShipTo()](#countrylistservice--unabletoshipto--)
-        + [Utility Methods](#utility-methods)
-            - [LocationReferenceService::alpha2($name)](#locationreferenceservice--alpha2--name-)
-            - [LocationReferenceService::name($alpha2)](#locationreferenceservice--name--alpha2-)
-            - [LocationReferenceService::currencies($alpha2, $verbose = false)](#locationreferenceservice--currencies--alpha2---verbose---false-)
-            - [LocationReferenceService::regions($alpha2, $returnSimpleArray = true)](#locationreferenceservice--regions--alpha2---returnsimplearray---true-)
     * [Issues, Uncertainties, and To-Dos](#issues--uncertainties--and-to-dos)
         + [Timezone information](#timezone-information)
         + [Data Hygiene](#data-hygiene)
+            - [Standardizing names for Canadian Provices](#standardizing-names-for-canadian-provices)
         + [Crimea](#crimea)
-        + [Standardizing names for Canadian Provices](#standardizing-names-for-canadian-provices)
     
 <!-- ecotrust-canada.github.io/markdown-toc/ -->
 
-REVIEW ME
-----------------
+TL;DR for non-technical users
+---------------
 
-**Please see notes in [REVIEWME.md](https://github.com/railroadmedia/location/blob/v2.0-/REVIEWME.md).**
+Welcome. If you're looking for one of three things this sections can help you:
 
-Please comment|ask-questions in code or create issues liberally.
+1. the list of countries that we use
+2. the list of countries we can't ship to
+3. info about special cases
 
-Thank you!
+See the relevant sub-section below...
+
+Note that sections 2 and 3 use a text file you'll find at [github.com/railroadmedia/location/blob/v2.0-/config/location.php](https://github.com/railroadmedia/location/blob/v2.0-/config/location.php).
+
+This is a file used by the programs running on our servers and the information you'll see is formatted for interpretation by the computer. However it is also human readable and while it may look weird at first, but it's actually very straightforward (we programmers are actually quite simple minded folk and generally need all the help we can get so we try to keep things simple).
 
 
-TL;DR:
+### 1. the list of countries that we use
+
+We use the International Standards Organization (ISO) 3166 standard ([wikipedia](https://en.wikipedia.org/wiki/ISO_3166)).
+
+You can explore the list [here](https://www.iso.org/obp/ui/#search/code/).
+
+There are some cases where we deviate from that standard. See the "info about special cases" section below.
+
+### 2. the list of countries we can't ship to
+
+You can see these in their current form by viewing the `'countries-unable-to-ship-to'` section of [the above mentioned text file](https://github.com/railroadmedia/location/blob/v2.0-/config/location.php).
+
+The countries are listed by their two-letter country codes. The the right of each there should also be the name of the country. These names are not readable by the computer as anything after a pound-symbol (`#`) on a line is ignored. Thus, the country name may not necessarily be the ISO 3166 standard. If you need to confirm the "proper" ISO 3166 name, you can either search online generally, or specifically by that two-letter code using the [ISO site](https://www.iso.org/obp/ui/#search/code/) (also listed above).
+
+This list must be manually updated however and so it can be out-of-date. If you need to directly check the source of information used to generate this list, you'll see them there in the list each as a kind of heading.
+
+### 3. info about special cases
+
+You can see these in their current form by viewing one of the below listed sections of the [the above mentioned text file](https://github.com/railroadmedia/location/blob/v2.0-/config/location.php).
+
+* `'countries-name-altered'` lists countries whose English short name we alter in all instances of usage. The first two-letter part of each line is the two-letter country code
+* `'user-defined'` adds countries that are not on ISO's list. While there is currently just one country there now, if there was more than one, you would see a visually-sensible organization of information—each "bundle" of lines enclosed in square brackets (`[` and `]`) is an "object" so to speak.
+
+Also, we can't ship to Crimea. See the "[Crimea](#crimea)" section below for techincal details.
+
+TL;DR for technical users
 ---------------
 
 `CountryListSevice::all()` is *the one always correct list* of countries for use in Musora applications and packages. It:
@@ -58,6 +80,13 @@ TL;DR:
 * The source data for the list is the [league/iso3166](https://github.com/thephpleague/iso3166) package.
 
 There are other methods available that return modified versions of the list as detailed below, but "\Railroad\Location\Services\CountryListService::all()" is the canonical list.
+
+There is also a manually updated list of countries that we cannot ship to. This is pulled from three sources. See notes below regarding this.
+
+Code Review
+------------------
+
+This package in implemented in a number of other repos, and you can see [REVIEWME.md](https://github.com/railroadmedia/location/blob/v2.0-/REVIEWME.md) for help in seeing how this package is used.
 
 Before Use
 -----------------
@@ -97,7 +126,9 @@ artisan vendor:publish will publish a location.php file to your application's co
 
 Please note that options in the configuration are generally indexed by the country's ISO 3166-2 ("alpha2") two letter country-code. You can best find these codes generally in the sidebar of the country's Wikipedia page. But, for the "English short name", and for general canonical reference, please refer to the ISO's search tool at [iso.org/obp/ui/#search/code/](https://www.iso.org/obp/ui/#search/code/).  
 
+
 ### Updating List of Countries We Cannot Ship To
+<!-- note that this section title is linked and editing it requires you then appropriately update instances of "#updating-list-of-countries-we-cannot-ship-to" that link to it -->
 
 This is tricky because it must be manually updated. To do so, check for updates on these three pages:
 
@@ -130,462 +161,31 @@ Use
 
 ### Overview of available lists and tools
 
-These will return arrays countries as described:
+Methods of `CountryListService`
 
-* CountryListService::all()
-* CountryListService::verbose()
-* CountryListService::allWeCanShipTo()
-* CountryListService::allWithCommonDuplicatedAtTop()
-* CountryListService::allWeCanShipToWithCommonDuplicatedAtTop()
-* CountryListService::unableToShipTo()
+* [all](docs/all.md)
+* [verbose](docs/verbose.md)
+* [allWeCanShipTo](docs/allWeCanShipTo.md)
+* [allWithCommonDuplicatedAtTop](docs/allWithCommonDuplicatedAtTop.md)
+* [allWeCanShipToWithCommonDuplicatedAtTop](docs/allWeCanShipToWithCommonDuplicatedAtTop.md)
+* [unableToShipTo](docs/unableToShipTo.md)
 
-These will return the described information about the country:
+Methods of `LocationReferenceService`
 
-* LocationReferenceService::alpha2($name)
-* LocationReferenceService::name($alpha2)
-* LocationReferenceService::currencies($alpha2, $verbose = false)
-* LocationReferenceService::regions($alpha2, $returnSimpleArray = true) // call "getSubdivisions" instead?
+* [alpha2](docs/alpha2.md)
+* [name](docs/name.md)
+* [currencies](docs/currencies.md)
+* [regions](docs/regions.md)
 
-These are advanced. Pay no attention to the man behind the curtain. They can be useful for extension though:
+Advanced methods you shouldn't use unless you need them for extension and grok the source to understand their potential usage:
 
 * LocationReferenceService::countriesMasterList()
 * LocationReferenceService::countriesListCreator($allWeCanShipTo = false, $copyCommonToTop = false)
 * LocationReferenceService::countryNamesFromOtherServices($service = null)
 
-### About examples in detailed sections below
-
-Below examples assume that above their usage, either a use-statement such as the following is present:
-
-```
-use Railroad\Location\Services\LocationReferenceService;
-use Railroad\Location\Services\CountryListService;
-```
-
-Or an alias is register in your application's *config/app.php* file. Ex:
-
-```
-    'aliases' => [
-        'CountryListService' => \Railroad\Location\Services\CountryListService::class,
-        'LocationReferenceService' => \Railroad\Location\Services\LocationReferenceService::class,
-    ]
-```
-
-Note that for all examples below, the config('location') is configured as per the default config/location.php described above.
-
-
-### Lists of countries
-
-#### CountryListService::all()
-
-**This is the easiest-to-use canonical list of countries.**
-
-Note the following:
-
-1. the countries we've listed as unable to ship to in config('location.'countries-unable-to-ship-to', ex: Syrian Arab Republic) *are* included here
-1. "TW" is "Taiwan" (not "Taiwan (Province of China)" as per ISO 3166) as defined in our configuation for "countries-name-altered"
-1. "Kosovo" is present with the alpha-2 code "XK" as per our "user-defined" configuration
-1. the "common-at-top" countries are not copied to the top
-
-Example:
-
-```
-array (
-  'AF' => 'Afghanistan',
-  'AX' => 'Åland Islands',
-  'AL' => 'Albania',
-  'DZ' => 'Algeria',
-  'AS' => 'American Samoa',
-  'AD' => 'Andorra',
-  'AO' => 'Angola',
-  'AI' => 'Anguilla',
-  'AQ' => 'Antarctica',
-  'AG' => 'Antigua and Barbuda',
-  // ... shortened for brevity
-  'ZA' => 'South Africa',
-  'GS' => 'South Georgia and the South Sandwich Islands',
-  'SS' => 'South Sudan',
-  'ES' => 'Spain',
-  'LK' => 'Sri Lanka',
-  'SD' => 'Sudan',
-  'SR' => 'Suriname',
-  'SJ' => 'Svalbard and Jan Mayen',
-  'SE' => 'Sweden',
-  'CH' => 'Switzerland',
-  'SY' => 'Syrian Arab Republic',
-  'TW' => 'Taiwan',
-  'TJ' => 'Tajikistan',
-  'TZ' => 'Tanzania, United Republic of',
-  // ... shortened for brevity
-  'AE' => 'United Arab Emirates',
-  'GB' => 'United Kingdom of Great Britain and Northern Ireland',
-  'US' => 'United States of America',
-  'UM' => 'United States Minor Outlying Islands',
-  // ... shortened for brevity
-  'VE' => 'Venezuela (Bolivarian Republic of)',
-  'VN' => 'Viet Nam',
-  'VG' => 'Virgin Islands (British)',
-  'VI' => 'Virgin Islands (U.S.)',
-  'WF' => 'Wallis and Futuna',
-  'EH' => 'Western Sahara',
-  'YE' => 'Yemen',
-  'ZM' => 'Zambia',
-  'ZW' => 'Zimbabwe',
-  'XK' => 'Kosovo',
-)
-```
-
-#### CountryListService::verbose()
-
-Regarding the configuration values for 'countries-unable-to-ship-to', 'countries-name-altered', 'common-at-top', and 'user-defined', this will return the same permutations as the `all()` method:
-
-1. the countries we've listed as unable to ship to in config('location.'countries-unable-to-ship-to', ex: Syrian Arab Republic) *are* included here
-1. "TW" is "Taiwan" (not "Taiwan (Province of China)" as per ISO 3166) as defined in our configuation for "countries-name-altered"
-1. "Kosovo" is present with the alpha-2 code "XK" as per our "user-defined" configuration
-1. the "common-at-top" countries are not copied to the top
-
-Abridged Example:
-
-```
-array (
-  0 =>
-  array (
-    'name' => 'Afghanistan',
-    'alpha2' => 'AF',
-    'alpha3' => 'AFG',
-    'numeric' => '004',
-    'currency' =>
-    array (
-      0 => 'AFN',
-    ),
-  ),
-  1 =>
-  array (
-    'name' => 'Åland Islands',
-    'alpha2' => 'AX',
-    'alpha3' => 'ALA',
-    'numeric' => '248',
-    'currency' =>
-    array (
-      0 => 'EUR',
-    ),
-  ),
-  # ... many countries omitted for brevity from this example
-  248 =>
-  array (
-    'name' => 'Zimbabwe',
-    'alpha2' => 'ZW',
-    'alpha3' => 'ZWE',
-    'numeric' => '716',
-    'currency' =>
-    array (
-      0 => 'BWP',
-      1 => 'EUR',
-      2 => 'GBP',
-      3 => 'USD',
-      4 => 'ZAR',
-    ),
-  ),
-  249 =>
-  array (
-    'name' => 'Kosovo',
-    'alpha2' => 'XK',
-    'alpha3' => 'XKS',
-    'numeric' => 900,
-    'currency' =>
-    array (
-      0 => 'EUR',
-    ),
-  ),
-)
-```
-
-#### CountryListService::allWeCanShipTo()
-
-Same as `all()`, except excluding an countries defined in 'countries-unable-to-ship-to'. Note Zimbabwe (ZY) missing whereas in `all()` it's second-to-last.
-
-Example:
-
-```
-array (
-  'AF' => 'Afghanistan',
-  'AX' => 'Åland Islands',
-  'AL' => 'Albania',
-  'DZ' => 'Algeria',
-  'AS' => 'American Samoa',
-  'AD' => 'Andorra',
-  'AO' => 'Angola',
-  'AI' => 'Anguilla',
-  'AQ' => 'Antarctica',
-  'AG' => 'Antigua and Barbuda',
-  // ... shortened for brevity
-  'ZA' => 'South Africa',
-  'GS' => 'South Georgia and the South Sandwich Islands',
-  'ES' => 'Spain',
-  'LK' => 'Sri Lanka',
-  'SD' => 'Sudan',
-  'SR' => 'Suriname',
-  'SJ' => 'Svalbard and Jan Mayen',
-  'SE' => 'Sweden',
-  'CH' => 'Switzerland',
-  'TW' => 'Taiwan',
-  'TZ' => 'Tanzania, United Republic of',
-  // ... shortened for brevity
-  'AE' => 'United Arab Emirates',
-  'GB' => 'United Kingdom of Great Britain and Northern Ireland',
-  'US' => 'United States of America',
-  'UM' => 'United States Minor Outlying Islands',
-  'UY' => 'Uruguay',
-  'UZ' => 'Uzbekistan',
-  'VU' => 'Vanuatu',
-  'VE' => 'Venezuela (Bolivarian Republic of)',
-  'VN' => 'Viet Nam',
-  'VG' => 'Virgin Islands (British)',
-  'VI' => 'Virgin Islands (U.S.)',
-  'WF' => 'Wallis and Futuna',
-  'EH' => 'Western Sahara',
-  'ZM' => 'Zambia',
-  'XK' => 'Kosovo',
-)
-```
-
-#### CountryListService::allWithCommonDuplicatedAtTop()
-
-Countries defined in config 'common-at-top' are *duplicated* at top of list. Note this array is indexed rather than keyed by alpha-2 country codes. This is because the countries copied to top are repeated and thus associative index is not possible.
-
-Note that the countries will also appear in their alphabetical location. This is for better UX in case a user didn't realize their country was at the top.
-
-Example:
-
-```
-array (
-  0 => 'United States of America',                              // 1st appearance
-  1 => 'Canada',                                                // 1st appearance
-  2 => 'United Kingdom of Great Britain and Northern Ireland',  // 1st appearance
-  3 => 'Australia',                                             // 1st appearance
-  4 => 'Afghanistan',
-  5 => 'Åland Islands',
-  // ... shortened for brevity
-  15 => 'Armenia',
-  16 => 'Aruba',
-  17 => 'Australia',                                            // 2nd appearance
-  18 => 'Austria',
-  19 => 'Azerbaijan',
-  // ... shortened for brevity
-  42 => 'Cambodia',
-  43 => 'Cameroon',
-  44 => 'Canada',                                               // 2nd appearance
-  45 => 'Cayman Islands',
-  46 => 'Central African Republic',
-  // ... shortened for brevity
-```
-
-#### CountryListService::allWeCanShipToWithCommonDuplicatedAtTop()
-
-Like `allWithCommonDuplicatedAtTop()` but with countries excluding countries defined in config's 'countries-unable-to-ship-to'. Note the reduced number of items indicated by the last index being 238 rather than 253 for `allWithCommonDuplicatedAtTop()`.
-
-Example:
-
-```
-array (
-  0 => 'United States of America',
-  1 => 'Canada',
-  2 => 'United Kingdom of Great Britain and Northern Ireland',
-  3 => 'Australia',
-  4 => 'Afghanistan',
-  5 => 'Åland Islands',
-  6 => 'Albania',
-  7 => 'Algeria',
-  8 => 'American Samoa',
-  9 => 'Andorra',
-  10 => 'Angola',
-  11 => 'Anguilla',
-  12 => 'Antarctica',
-  13 => 'Antigua and Barbuda',
-  // ... shortened for brevity
-  200 => 'South Africa',
-  201 => 'South Georgia and the South Sandwich Islands',
-  202 => 'Spain',
-  203 => 'Sri Lanka',
-  204 => 'Sudan',
-  205 => 'Suriname',
-  206 => 'Svalbard and Jan Mayen',
-  207 => 'Sweden',
-  208 => 'Switzerland',
-  209 => 'Taiwan',
-  210 => 'Tanzania, United Republic of',
-  // ... shortened for brevity
-  224 => 'United Arab Emirates',
-  225 => 'United Kingdom of Great Britain and Northern Ireland',
-  226 => 'United States of America',
-  227 => 'United States Minor Outlying Islands',
-  228 => 'Uruguay',
-  229 => 'Uzbekistan',
-  230 => 'Vanuatu',
-  231 => 'Venezuela (Bolivarian Republic of)',
-  232 => 'Viet Nam',
-  233 => 'Virgin Islands (British)',
-  234 => 'Virgin Islands (U.S.)',
-  235 => 'Wallis and Futuna',
-  236 => 'Western Sahara',
-  237 => 'Zambia',
-  238 => 'Kosovo',
-)
-```
-
-#### CountryListService::unableToShipTo()
-
-Returns only the countries defined in the above noted "unable-to-ship-to" configuration.
-
-Example:
-
-```
-array (
-  'BM' => 'Bermuda',
-  'BN' => 'Brunei Darussalam',
-  'BO' => 'Bolivia (Plurinational State of)',
-  'BT' => 'Bhutan',
-  'BW' => 'Botswana',
-  'DM' => 'Dominica',
-  'DO' => 'Dominican Republic',
-  'KY' => 'Cayman Islands',
-  'LY' => 'Libya',
-  'PG' => 'Papua New Guinea',
-  'SS' => 'South Sudan',
-  'SY' => 'Syrian Arab Republic',
-  'TJ' => 'Tajikistan',
-  'YE' => 'Yemen',
-  'ZW' => 'Zimbabwe',
-)
-```
-
-### Utility Methods
-
-#### LocationReferenceService::alpha2($name)
-
-Given above noted configuration
-
-* passed "Canada", will return "CA"
-* passed "Taiwan", will return "TW"
-* passed "Kosovo", will return "XK"
-* passed "acountrythatdoesntexist", will return boolean false
-* passed "Taiwan (Province of China)", will return boolean false
-    * because overriden by 'alter-name' configuration
-
-
-#### LocationReferenceService::name($alpha2)
-
-* passed "CA", will return "Canada"
-* passed "TW", will return "Taiwan"
-* passed "XK", will return "Kosovo"
-* passed "analpha2codethatdoesntexist", will return boolean false
-
-
-#### LocationReferenceService::currencies($alpha2, $verbose = false)
-
-Passed only `'CA'`, will return:
-
-```
-array (
-  0 => 'CAD',
-)
-```
-
-If—with first argument again "CA"—a second argument is provided that is `true`, the result will be:
-
-```
-array (
-  'CAD' =>
-  array (
-    'name' => 'Canadian Dollar',
-    'local-name' => 'Canadian Dollar',
-    'numeric-code' => '124',
-  ),
-)
-```
-
-For a country with several currencies—for example Zimbabwe (`'ZW'`)—the result will look like this:
-
-```
-array (
-  0 => 'BWP',
-  1 => 'EUR',
-  2 => 'GBP',
-  3 => 'USD',
-  4 => 'ZAR',
-)
-```
-
-
-If—again first param is "ZW"—the second param `true` we get:
-
-```
-array (
-  'BWP' =>
-  array (
-    'name' => 'Pula',
-    'local-name' => 'Pula',
-    'numeric-code' => '072',
-  ),
-  'EUR' =>
-  array (
-    'name' => 'Euro',
-    'local-name' => 'Euro',
-    'numeric-code' => '978',
-  ),
-  'GBP' =>
-  array (
-    'name' => 'Pound Sterling',
-    'local-name' => 'Pound Sterling',
-    'numeric-code' => '826',
-  ),
-  'USD' =>
-  array (
-    'name' => 'US Dollar',
-    'local-name' => 'US Dollar',
-    'numeric-code' => '840',
-  ),
-  'ZAR' =>
-  array (
-    'name' => 'Rand',
-    'local-name' => 'Rand',
-    'numeric-code' => '710',
-  ),
-)
-```
-
-
-#### LocationReferenceService::regions($alpha2, $returnSimpleArray = true)
-
-If passed—for example—`'CA'`, will return:
-
-```
-array (
-  'CA-AB' => 'Alberta',
-  'CA-BC' => 'British Columbia',
-  'CA-MB' => 'Manitoba',
-  'CA-NB' => 'New Brunswick',
-  'CA-NL' => 'Newfoundland and Labrador',
-  'CA-NS' => 'Nova Scotia',
-  'CA-NT' => 'Northwest Territories',
-  'CA-NU' => 'Nunavut',
-  'CA-ON' => 'Ontario',
-  'CA-PE' => 'Prince Edward Island',
-  'CA-QC' => 'Quebec',
-  'CA-SK' => 'Saskatchewan',
-  'CA-YT' => 'Yukon Territory',
-)
-```
 
 Issues, Uncertainties, and To-Dos
 --------------------------------------------
-
-[comment]: <> (### Missing data for user-defined countries)
-
-[comment]: <> (If using an external package to retrieve information, will user-defined countries' information &#40;set in config&#41; be returned?)
-
-[comment]: <> (Namely, if calling on any feature of package that we're using for getting info about a country &#40;like league/iso3166 and sokil/php-isocodes&#41; if the param passed species an user-defined country, are we successfully prempting the typical call to the 3rd-party package and rather just returning the user-defined info we set in config?)
-
-[comment]: <> (I believe so, but am unsure)
 
 ### Timezone information
 
@@ -603,11 +203,10 @@ Currently the database (ex: musora_laravel.ecommerce_addresses) stores a non-sta
 
 I'm going to do another check of all automated tests. Last time there were no issues, but changes have been made since then. They're functionally trivial, but it feels like the least I can do. Otherwise I feel like I'd have to go through all functionality, and that is likely not required and thus even more so an unattractive proposition.
 
-### Crimea
-
-Countries we can't ship to are no worries, but there is *one* subdivision (read: province, state, administrative district, etc) that we cannot ship to. This is not addressed currently because the implementation of this package have no provision for differentiating between subdivisions in any country other than Canada. Though, at the moment, it's only one small area, so is not of concern.
-
-### Standardizing names for Canadian Provices
+#### Standardizing names for Canadian Provices
 
 The currently used names and abreviations for Canadian provinces are not standardized. I don't think it will cause any issues, but I think we should ultimately replace the province names with the their ISO 3166-2 codes (ex: "BC" would be "CA-BC" iirc). We would then get the names (ex: "British Columbia") from some service method by supplying the ISO 3166-2 code (ex: "CA-BC"). This would lay the foundation for using subdivision information for all countries (which is available by country-code from the 3rd-party packages we're using).
 
+### Crimea
+
+Countries we can't ship to are no worries, but there is *one* subdivision (read: province, state, administrative district, etc) that we cannot ship to. This is not addressed currently because the implementation of this package have no provision for differentiating between subdivisions in any country other than Canada. Though, at the moment, it's only one small area, so is not of concern.
