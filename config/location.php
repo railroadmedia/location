@@ -5,293 +5,128 @@ return [
     'environment' => 'development',
     'testing_ip' => '70.69.219.138',
     'active_api' => 'ip-api.com',
-    'api' =>
+    'api' => [
+        'ipdata.co' => [
+            'url' => 'https://api.ipdata.co/',
+            'apiKey' => env('IP_DATA_API_KEY'),
+            'countryKey' => 'country_name',
+            'countryCodeKey' => 'country_code',
+            'regionNameKey' => 'region_name',
+            'latitudeKey' => 'latitude',
+            'longitudeKey' => 'longitude',
+        ],
+        'freegeoip.net' => [
+            'url' => 'http://freegeoip.net/json/',
+            'countryKey' => 'country_name',
+            'countryCodeKey' => 'country_code',
+            'regionNameKey' => 'region_name',
+            'latitudeKey' => 'latitude',
+            'longitudeKey' => 'longitude',
+        ],
+        'ip-api.com' => [
+            'url' => 'http://ip-api.com/json/',
+            'countryKey' => 'country',
+            'countryCodeKey' => 'countryCode',
+            'regionNameKey' => 'regionName',
+            'latitudeKey' => 'lat',
+            'longitudeKey' => 'lon',
+            'cityKey' => 'city',
+        ],
+    ],
+
+    'countries-unable-to-ship-to' => [ // See README for instructions on updating this list.
+
+        // as per the "ePost Global (PPDC, PPT)" column at https://www.epostglobalshipping.com/imp-serviceupdates.html
+        'BM', # Bermuda
+        'BT', # Bhutan
+        'BW', # Botswana
+        'KY', # Cayman Islands
+        'DM', # Dominica
+        'DO', # Dominican Republic
+        'LY', # Libya
+        'PG', # Papua New Guinea
+        'TJ', # Tajikistan
+        'YE', # Yemen
+        'ZW', # Zimbabwe
+        'BO', # Bolivia (Plurinational State of)    referred to as "Bolivia" at epostglobalshipping.com
+        'BN', # Brunei Darussalam                   referred to as "Brunei" at epostglobalshipping.com
+        'SS', # South Sudan                         referred to as "Sudan(South)" at epostglobalshipping.com
+        'SY', # Syrian Arab Republic (the)          referred to as "Syria (SAR)" at epostglobalshipping.com
+
+        // as per USPS list of sanctioned countries at https://about.usps.com/publications/pub699/pub699_online_017.htm
+        'CU', # Cuba
+        'IR', # Iran (Islamic Republic of)
+        'KP', # Korea (the Democratic People's Republic of)
+        'SD', # Sudan (the)
+
+        // as per https://about.usps.com/newsroom/service-alerts/international/welcome.htm
+        'BW', # Botswana
+        'GF', # French Guiana
+        'MU', # Mauritius
+        'SC', # Seychelles
+        'PF', # French Polynesia
+        'MN', # Mongolia
+        'SS', # South Sudan
+        'TD', # Chad
+        'GP', # Guadeloupe
+        'MM', # Myanmar
+        'TJ', # Tajikistan
+        'CU', # Cuba
+        'TL', # Timor-Leste
+        'ER', # Eritrea
+        'LS', # Lesotho
+        'TM', # Turkmenistan
+        'MQ', # Martinique
+        'WS', # Samoa
+        'YE', # Yemen
+        'LA', # Lao People's Democratic Republic    # refered to as "Laos" at USPS source
+        'RE', # Réunion                             # refered to as "Reunion (Bourbon)" at USPS source
+        'PM', # Saint Pierre and Miquelon           # refered to as "Saint Pierre and Miquelon (Miquelon)" at USPS source
+        'SZ', # Eswatini                            # refered to as "Eswatini (Swaziland)" at USPS source
+    ],
+
+    // If we need to prohibit physical orders by region, we'll need this.
+//    'regions-no-shipping-by-country' => [
+//        'UA' => [ # Ukraine
+//            'UA-43', # 'Avtonomna Respublika Krym', as per USPS sanctions list
+//        ],
+//    ],
+
+    'countries-name-altered' => [
+        'TW' => 'Taiwan',           # renamed from "Taiwan (Province of China)"
+        'US' => 'United States',    # renamed from "United States of America (the)"
+        'GB' => 'United Kingdom',   # renamed from "United Kingdom of Great Britain and Northern Ireland (the)"
+    ],
+
+    'common-at-top' => [ // for usage example, see CountryListService::allWithCommonDuplicatedAtTop()
+        'US', # United States of America (the)
+        'CA', # Canada
+        'GB', # United Kingdom of Great Britain and Northern Ireland (the)
+        'AU', # Austrailia
+    ],
+
+    /*
+     * Non-standard user-defined entries
+     * ---------------------------------
+     *
+     * If a country is not represented in ISO 3166, we can add it here. However remember that is not standardized and
+     * thus cannot be assumed to have to same meaning elsewhere. For example, "XK" is used by many—but not
+     * all—organizations to represent Kosovo.
+     *
+     * "User-assigned code elements are codes at the disposal of users who need to add further names of countries,
+     * territories, or other geographical entities to their in-house application of ISO 3166-1, and the ISO 3166/MA will
+     * never use these codes in the updating process of the standard. The following alpha-2 codes can be user-assigned:
+     * AA, QM to QZ, XA to XZ, and ZZ."
+     * source: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#User-assigned_code_elements, March 12th 2021
+     * Also see https://en.wikipedia.org/wiki/ISO_3166-1_numeric#User-assigned_code_elements regarding numerics)
+     */
+    'user-defined' => [
         [
-            'ipdata.co' => [
-                'url' => 'https://api.ipdata.co/',
-                'apiKey' => env('IP_DATA_API_KEY'),
-                'countryKey' => 'country_name',
-                'countryCodeKey' => 'country_code',
-                'regionNameKey' => 'region_name',
-                'latitudeKey' => 'latitude',
-                'longitudeKey' => 'longitude',
-            ],
-            'freegeoip.net' => [
-                'url' => 'http://freegeoip.net/json/',
-                'countryKey' => 'country_name',
-                'countryCodeKey' => 'country_code',
-                'regionNameKey' => 'region_name',
-                'latitudeKey' => 'latitude',
-                'longitudeKey' => 'longitude',
-            ],
-            'ip-api.com' => [
-                'url' => 'http://ip-api.com/json/',
-                'countryKey' => 'country',
-                'countryCodeKey' => 'countryCode',
-                'regionNameKey' => 'regionName',
-                'latitudeKey' => 'lat',
-                'longitudeKey' => 'lon',
-                'cityKey' => 'city',
-            ],
-        ],
-
-    'country_regions' => [
-        'Canada' => [
-            'Alberta',
-            'British Columbia',
-            'Manitoba',
-            'New Brunswick',
-            'Newfoundland And Labrador',
-            'Northwest Territories',
-            'Nova Scotia',
-            'Nunavut',
-            'Ontario',
-            'Prince Edward Island',
-            'Quebec',
-            'Saskatchewan',
-            'Yukon',
-        ],
-    ],
-
-    'countries' => [
-        'US' => 'United States',
-        'CA' => 'Canada',
-        'GB' => 'United Kingdom',
-        'AU' => 'Australia',
-        'AF' => 'Afghanistan',
-        'AX' => 'Aland Islands',
-        'AL' => 'Albania',
-        'DZ' => 'Algeria',
-        'AS' => 'American Samoa',
-        'AD' => 'Andorra',
-        'AO' => 'Angola',
-        'AI' => 'Anguilla',
-        'AQ' => 'Antarctica',
-        'AG' => 'Antigua and Barbuda',
-        'AR' => 'Argentina',
-        'AM' => 'Armenia',
-        'AW' => 'Aruba',
-        'AT' => 'Austria',
-        'AZ' => 'Azerbaijan',
-        'BH' => 'Bahrain',
-        'BD' => 'Bangladesh',
-        'BB' => 'Barbados',
-        'BY' => 'Belarus',
-        'BE' => 'Belgium',
-        'BZ' => 'Belize',
-        'BJ' => 'Benin',
-        'BM' => 'Bermuda',
-        'BT' => 'Bhutan',
-        'BO' => 'Bolivia',
-        'BA' => 'Bosnia and Herzegovina',
-        'BW' => 'Botswana',
-        'BV' => 'Bouvet Island',
-        'BR' => 'Brazil',
-        'IO' => 'British Indian Ocean Territory',
-        'VG' => 'British Virgin Islands',
-        'BN' => 'Brunei',
-        'BG' => 'Bulgaria',
-        'BF' => 'Burkina Faso',
-        'BI' => 'Burundi',
-        'KH' => 'Cambodia',
-        'CM' => 'Cameroon',
-        'CV' => 'Cape Verde',
-        'BQ' => 'Caribbean Netherlands',
-        'KY' => 'Cayman Islands',
-        'CF' => 'Central African Republic',
-        'TD' => 'Chad',
-        'CL' => 'Chile',
-        'CN' => 'China',
-        'CX' => 'Christmas Island',
-        'CC' => 'Cocos (Keeling) Islands',
-        'CO' => 'Colombia',
-        'KM' => 'Comoros',
-        'CG' => 'Congo',
-        'CK' => 'Cook Islands',
-        'CR' => 'Costa Rica',
-        'HR' => 'Croatia',
-        'CW' => 'Curacao',
-        'CY' => 'Cyprus',
-        'CZ' => 'Czech Republic',
-        'CD' => 'Democratic Republic of Congo',
-        'DK' => 'Denmark',
-        'DJ' => 'Djibouti',
-        'DM' => 'Dominica',
-        'DO' => 'Dominican Republic',
-        'TL' => 'East Timor',
-        'EC' => 'Ecuador',
-        'EG' => 'Egypt',
-        'SV' => 'El Salvador',
-        'GQ' => 'Equatorial Guinea',
-        'ER' => 'Eritrea',
-        'EE' => 'Estonia',
-        'ET' => 'Ethiopia',
-        'FK' => 'Falkland Islands',
-        'FO' => 'Faroe Islands',
-        'FM' => 'Federated States of Micronesia',
-        'FJ' => 'Fiji',
-        'FI' => 'Finland',
-        'FR' => 'France',
-        'GF' => 'French Guiana',
-        'PF' => 'French Polynesia',
-        'TF' => 'French Southern Territories',
-        'GA' => 'Gabon',
-        'GE' => 'Georgia',
-        'DE' => 'Germany',
-        'GH' => 'Ghana',
-        'GI' => 'Gibraltar',
-        'GR' => 'Greece',
-        'GL' => 'Greenland',
-        'GD' => 'Grenada',
-        'GP' => 'Guadeloupe',
-        'GU' => 'Guam',
-        'GT' => 'Guatemala',
-        'GN' => 'Guinea',
-        'GW' => 'Guinea-Bissau',
-        'GY' => 'Guyana',
-        'HT' => 'Haiti',
-        'HM' => 'Heard Island and McDonald Islands',
-        'HN' => 'Honduras',
-        'HK' => 'Hong Kong',
-        'HU' => 'Hungary',
-        'IS' => 'Iceland',
-        'IN' => 'India',
-        'ID' => 'Indonesia',
-        'IQ' => 'Iraq',
-        'NT' => 'Iraq-Saudi Arabia Neutral Zone',
-        'IE' => 'Ireland',
-        'IL' => 'Israel',
-        'IT' => 'Italy',
-        'CI' => 'Ivory Coast',
-        'JM' => 'Jamaica',
-        'JP' => 'Japan',
-        'JO' => 'Jordan',
-        'KZ' => 'Kazakhstan',
-        'KE' => 'Kenya',
-        'KI' => 'Kiribati',
-        'KW' => 'Kuwait',
-        'KG' => 'Kyrgyzstan',
-        'LA' => 'Laos',
-        'LV' => 'Latvia',
-        'LB' => 'Lebanon',
-        'LS' => 'Lesotho',
-        'LR' => 'Liberia',
-        'LY' => 'Libya',
-        'LI' => 'Liechtenstein',
-        'LT' => 'Lithuania',
-        'LU' => 'Luxembourg',
-        'MO' => 'Macau',
-        'MK' => 'Macedonia',
-        'MG' => 'Madagascar',
-        'MW' => 'Malawi',
-        'MY' => 'Malaysia',
-        'MV' => 'Maldives',
-        'ML' => 'Mali',
-        'MT' => 'Malta',
-        'MH' => 'Marshall Islands',
-        'MQ' => 'Martinique',
-        'MR' => 'Mauritania',
-        'MU' => 'Mauritius',
-        'YT' => 'Mayotte',
-        'MX' => 'Mexico',
-        'MD' => 'Moldova',
-        'MC' => 'Monaco',
-        'MN' => 'Mongolia',
-        'ME' => 'Montenegro',
-        'MS' => 'Montserrat',
-        'MA' => 'Morocco',
-        'MZ' => 'Mozambique',
-        'MM' => 'Myanmar',
-        'NA' => 'Namibia',
-        'NR' => 'Nauru',
-        'NP' => 'Nepal',
-        'NL' => 'Netherlands',
-        'NC' => 'New Caledonia',
-        'NZ' => 'New Zealand',
-        'NI' => 'Nicaragua',
-        'NE' => 'Niger',
-        'NG' => 'Nigeria',
-        'NU' => 'Niue',
-        'NF' => 'Norfolk Island',
-        'MP' => 'Northern Mariana Islands',
-        'NO' => 'Norway',
-        'OM' => 'Oman',
-        'PK' => 'Pakistan',
-        'PW' => 'Palau',
-        'PS' => 'Palestine',
-        'PA' => 'Panama',
-        'PG' => 'Papua New Guinea',
-        'PY' => 'Paraguay',
-        'PE' => 'Peru',
-        'PH' => 'Philippines',
-        'PN' => 'Pitcairn',
-        'PL' => 'Poland',
-        'PT' => 'Portugal',
-        'PR' => 'Puerto Rico',
-        'QA' => 'Qatar',
-        'RE' => 'Reunion',
-        'RO' => 'Romania',
-        'RU' => 'Russia',
-        'RW' => 'Rwanda',
-        'BL' => 'Saint Barthelemy',
-        'KN' => 'Saint Kitts and Nevis',
-        'PM' => 'Saint Pierre and Miquelon',
-        'VC' => 'Saint Vincent and the Grenadines',
-        'MF' => 'Saint-Martin',
-        'WS' => 'Samoa',
-        'SM' => 'San Marino',
-        'ST' => 'Sao Tome and Principe',
-        'SA' => 'Saudi Arabia',
-        'SN' => 'Senegal',
-        'RS' => 'Serbia',
-        'SC' => 'Seychelles',
-        'SL' => 'Sierra Leone',
-        'SG' => 'Singapore',
-        'SX' => 'Sint Maarten',
-        'SK' => 'Slovakia',
-        'SI' => 'Slovenia',
-        'SB' => 'Solomon Islands',
-        'SO' => 'Somalia',
-        'ZA' => 'South Africa',
-        'GS' => 'South Georgia and the South Sandwich Islands',
-        'KR' => 'South Korea',
-        'SS' => 'South Sudan',
-        'ES' => 'Spain',
-        'LK' => 'Spratly Islands',
-        'SR' => 'Suriname',
-        'SJ' => 'Svalbard and Jan Mayen',
-        'SZ' => 'Swaziland',
-        'SE' => 'Sweden',
-        'CH' => 'Switzerland',
-        'TW' => 'Taiwan',
-        'TJ' => 'Tajikistan',
-        'TZ' => 'Tanzania',
-        'TH' => 'Thailand',
-        'BS' => 'The Bahamas',
-        'GM' => 'The Gambia',
-        'TG' => 'Togo',
-        'TK' => 'Tokelau',
-        'TO' => 'Tonga',
-        'TT' => 'Trinidad and Tobago',
-        'TN' => 'Tunisia',
-        'TR' => 'Turkey',
-        'TM' => 'Turkmenistan',
-        'TC' => 'Turks and Caicos Islands',
-        'TV' => 'Tuvalu',
-        'VI' => 'US Virgin Islands',
-        'UG' => 'Uganda',
-        'UA' => 'Ukraine',
-        'AE' => 'United Arab Emirates',
-        'UM' => 'United States Minor Outlying Islands',
-        'UY' => 'Uruguay',
-        'UZ' => 'Uzbekistan',
-        'VU' => 'Vanuatu',
-        'VE' => 'Venezuela',
-        'VN' => 'Viet Nam',
-        'WF' => 'Wallis and Futuna',
-        'EH' => 'Western Sahara',
-        'YE' => 'Yemen',
-        'ZM' => 'Zambia',
-        'ZW' => 'Zimbabwe',
-    ],
+            'name' => 'Kosovo',
+            'alpha2' => 'XK',
+            'alpha3' => 'XKS',
+            'numeric' => 900,
+            'currency' => ['EUR'],
+        ]
+    ]
 ];

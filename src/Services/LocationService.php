@@ -2,7 +2,6 @@
 
 namespace Railroad\Location\Services;
 
-
 use Illuminate\Session\Store;
 
 class LocationService
@@ -158,30 +157,5 @@ class LocationService
         }
 
         return explode(',', $ip)[0] ?? '';
-    }
-
-    /**
-     * @return array
-     */
-    public static function countries()
-    {
-        return config('location.countries', []);
-    }
-
-    /**
-     * @param $country
-     * @return array
-     */
-    public static function countryRegions($country)
-    {
-        return config('location.country_regions')[$country] ?? [];
-    }
-    /**
-     * @param $countryName
-     * @return string
-     */
-    public static function countryCode($countryName)
-    {
-        return array_flip(config('location.countries'))[$countryName] ?? '';
     }
 }
