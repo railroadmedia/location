@@ -39,6 +39,12 @@ class LocationReferenceService
 
         $countries = array_merge($countries, $countriesToAdd);
 
+        usort($countries, function($a, $b){
+            $at = iconv('UTF-8', 'ASCII//TRANSLIT', $a['name']);
+            $bt = iconv('UTF-8', 'ASCII//TRANSLIT', $b['name']);
+            return strcmp($at, $bt);
+        });
+
         return $countries;
     }
 
