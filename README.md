@@ -6,11 +6,11 @@ Table of Contents
 
 - [railroad\/location](#railroad--location)
     * [Table of Contents](#table-of-contents)
-    * [TL;DR for non-technical users](#tl-dr-for-non-technical-users)
+    * [TLDR for non-technical users](#tldr-for-non-technical-users)
         + [1. the list of countries that we use](#1-the-list-of-countries-that-we-use)
         + [2. the list of countries we can't ship to](#2-the-list-of-countries-we-can-t-ship-to)
         + [3. info about special cases](#3-info-about-special-cases)
-    * [TL;DR for technical users](#tl-dr-for-technical-users)
+    * [TLDR for technical users](#tldr-for-technical-users)
     * [Code Review](#code-review)
     * [Before Use](#before-use)
         + [Installation](#installation)
@@ -23,13 +23,13 @@ Table of Contents
         + [Data Hygiene](#data-hygiene)
             - [Standardizing names for Canadian Provices](#standardizing-names-for-canadian-provices)
         + [Crimea](#crimea)
-    
+
 <!-- ecotrust-canada.github.io/markdown-toc/ -->
 
-TL;DR for non-technical users
+TLDR for non-technical users
 ---------------
 
-Welcome. If you're looking for one of three things this sections can help you:
+Welcome. If you're looking for one of three things these sections can help you:
 
 1. the list of countries that we use
 2. the list of countries we can't ship to
@@ -67,7 +67,7 @@ You can see these in their current form by viewing one of the below listed secti
 
 Also, we can't ship to Crimea. See the "[Crimea](#crimea)" section below for techincal details.
 
-TL;DR for technical users
+TLDR for technical users
 ---------------
 
 `CountryListSevice::all()` is *the one always correct list* of countries for use in Musora applications and packages. It:
