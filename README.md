@@ -83,6 +83,8 @@ There are other methods available that return modified versions of the list as d
 
 There is also a manually updated list of countries that we cannot ship to. This is pulled from three sources. See notes below regarding this.
 
+It uses two external repositories ([thephpleague/iso3166](https://github.com/thephpleague/iso3166) and [sokil/php-isocodes](https://github.com/sokil/php-isocodes)) that provides and up-to-date country data as per the **ISO 3166 standard**([read about it here](https://en.wikipedia.org/wiki/ISO_3166) and [explore it here](https://www.iso.org/iso-3166-country-codes.html)). Thus, to update the country list we need only run `composer update` in the applications that implement this package.
+
 Code Review
 ------------------
 
