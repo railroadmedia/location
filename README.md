@@ -134,29 +134,14 @@ Please note that options in the configuration are generally indexed by the count
 
 This is tricky because it must be manually updated. To do so, check for updates on these three pages:
 
-1. The "ePost Global (PPDC, PPT)" column at https://www.epostglobalshipping.com/imp-serviceupdates.html
+1. The "ePost Global (PPDC, PPT)" column at https://epostglobalshipping.com/service-updates/
 2. USPS list of sanctioned countries at https://about.usps.com/publications/pub699/pub699_online_017.htm
 3. USPS Service Alerts, International service disruptions
 https://about.usps.com/newsroom/service-alerts/international/welcome.htm
 
 Note that the USPS Service Alerts—at the time of writing this, March 2021—has a section titled "Global Express Guaranteed® Service Suspensions and Disruptions". The section is not of concern to use because we don't use that service. Thus, some parsing of the page may be necessary when you check it to determine which sections are relevant.
 
-There are two directories in this package's "data" file that are not used by the software, but rather for your use in manually updating this list. With some creative multi-cursor editing you can take the copied content from the relevant tables in the above pages and format them so that you can create a new file and compare them to previous versions of the similarily "manually-formatted" versions of that data. Basically epost is a table that when copied will give you TSV.
-
-To format table data copied from epostGlobal:
-
-1. create a new file names in similar fashion as previous ('YYYY-MM-DD.txt')
-1. copy and paste the contents of the table at epostglobalshipping.com/imp-serviceupdates.html to that empty file
-1. put an asterisk at the start of every line.
-    * One way to do this is:
-        1. Select all "tab" characters (in PHPStorm use "Select all occurences" hotkey, for me it's ctrl+shift+alt+j)
-        1. press "Home" to put cursor at start of every line
-        1. type an asterisk with cursor at start of every line
-1. Select all "tab" characters (the spaces between each "cell value" will be a tab, just select that apparent whitespace, If you then select all occurences you'll be able to tell whether you got all the tab characters because they'll mostly be different lengths of "whitespace", and there'll be spaces *not* selected.)
-1. press "Enter", and then "Tab" and you'll have then have an indented list.
-1. As of writing this (March 2021), the relevant column is the third one, so if each country has four values listed (now) below it, delete the first, second, and fourth
-1. You now have a file formatted as per the previous versions, compare it to the previous version.
-1. update the config as needed.
+There are two directories in this package's "data" file that are not used by the software, but rather for your use in manually updating this list. With some creative multi-cursor editing you can take the copied content from the relevant tables in the above pages and format them so that you can create a new file and compare them to previous versions of the similarily "manually-formatted" versions of that data.
 
 Use
 -------------
