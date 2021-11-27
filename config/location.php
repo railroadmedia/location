@@ -39,19 +39,17 @@ return [
         // as per the "ePost Global (PPDC, PPT)" column at https://www.epostglobalshipping.com/imp-serviceupdates.html
         'BM', # Bermuda
         'BT', # Bhutan
-        'BW', # Botswana
         'KY', # Cayman Islands
-        'DM', # Dominica
-        'DO', # Dominican Republic
         'LY', # Libya
         'PG', # Papua New Guinea
         'TJ', # Tajikistan
         'YE', # Yemen
-        'ZW', # Zimbabwe
-        'BO', # Bolivia (Plurinational State of)    referred to as "Bolivia" at epostglobalshipping.com
+        'AF', # Afghanistan
+        'EC', # Ecuador
         'BN', # Brunei Darussalam                   referred to as "Brunei" at epostglobalshipping.com
         'SS', # South Sudan                         referred to as "Sudan(South)" at epostglobalshipping.com
         'SY', # Syrian Arab Republic (the)          referred to as "Syria (SAR)" at epostglobalshipping.com
+        'VE', # Venezuela (Bolivarian Republic of)  referred to as "Venezuela" at epostglobalshipping.com
 
         // as per USPS list of sanctioned countries at https://about.usps.com/publications/pub699/pub699_online_017.htm
         'CU', # Cuba
@@ -60,29 +58,25 @@ return [
         'SD', # Sudan (the)
 
         // as per https://about.usps.com/newsroom/service-alerts/international/welcome.htm
-        'BW', # Botswana
         'GF', # French Guiana
-        'MU', # Mauritius
-        'SC', # Seychelles
-        'PF', # French Polynesia
         'MN', # Mongolia
         'SS', # South Sudan
         'TD', # Chad
         'GP', # Guadeloupe
-        'MM', # Myanmar
         'TJ', # Tajikistan
         'CU', # Cuba
         'TL', # Timor-Leste
-        'ER', # Eritrea
-        'LS', # Lesotho
         'TM', # Turkmenistan
         'MQ', # Martinique
         'WS', # Samoa
         'YE', # Yemen
+        'LR', # Liberia
+        'CF', # Central African Republic (the)
+        'YT', # Mayotte
+        'SL', # Sierra Leone
         'LA', # Lao People's Democratic Republic    # refered to as "Laos" at USPS source
         'RE', # Réunion                             # refered to as "Reunion (Bourbon)" at USPS source
         'PM', # Saint Pierre and Miquelon           # refered to as "Saint Pierre and Miquelon (Miquelon)" at USPS source
-        'SZ', # Eswatini                            # refered to as "Eswatini (Swaziland)" at USPS source
     ],
 
     // If we need to prohibit physical orders by region, we'll need this.
