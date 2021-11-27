@@ -143,6 +143,8 @@ Note that the USPS Service Alerts—at the time of writing this, March 2021—ha
 
 There are two directories in this package's "data" file that are not used by the software, but rather for your use in manually updating this list. With some creative multi-cursor editing you can take the copied content from the relevant tables in the above pages and format them so that you can create a new file and compare them to previous versions of the similarily "manually-formatted" versions of that data.
 
+There's script [here](https://github.com/railroadmedia/location/blob/v2.0-/docs/helpfulScript.md) that can be helpful for finding the differences.
+
 Use
 -------------
 
