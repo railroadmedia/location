@@ -3,6 +3,8 @@
 namespace Railroad\Location\Providers;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Railroad\Location\Console\Commands\LocationHelper;
+use Railroad\Location\Console\Commands\LocationHelper2;
 use Railroad\Location\Services\ConfigService;
 use Sokil\IsoCodes\IsoCodesFactory;
 
@@ -43,5 +45,16 @@ class LocationServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__ . '/../../config/location.php', 'location'
         );
+
+        if ($this->app->runningInConsole()) {
+
+            $this->commands(
+                [
+                    LocationHelper::class,
+                    LocationHelper2::class,
+                ]
+            );
+
+        }
     }
 }

@@ -130,20 +130,18 @@ Please note that options in the configuration are generally indexed by the count
 
 
 ### Updating List of Countries We Cannot Ship To
-<!-- note that this section title is linked and editing it requires you then appropriately update instances of "#updating-list-of-countries-we-cannot-ship-to" that link to it -->
+<!-- note that this section TITLE is linked and editing it requires you then appropriately update instances of "#updating-list-of-countries-we-cannot-ship-to" that link to it -->
 
-This is tricky because it must be manually updated. To do so, check for updates on these three pages:
-
-1. The "ePost Global (PPDC, PPT)" column at https://epostglobalshipping.com/service-updates/
-2. USPS list of sanctioned countries at https://about.usps.com/publications/pub699/pub699_online_017.htm
-3. USPS Service Alerts, International service disruptions
-https://about.usps.com/newsroom/service-alerts/international/welcome.htm
-
-Note that the USPS Service Alerts—at the time of writing this, March 2021—has a section titled "Global Express Guaranteed® Service Suspensions and Disruptions". The section is not of concern to use because we don't use that service. Thus, some parsing of the page may be necessary when you check it to determine which sections are relevant.
-
-There are two directories in this package's "data" file that are not used by the software, but rather for your use in manually updating this list. With some creative multi-cursor editing you can take the copied content from the relevant tables in the above pages and format them so that you can create a new file and compare them to previous versions of the similarily "manually-formatted" versions of that data.
-
-There's script [here](https://github.com/railroadmedia/location/blob/v2.0-/docs/helpfulScript.md) that can be helpful for finding the differences.
+1. Copy the list country names from these three sources:
+   1. The "ePost Global (PPDC, PPT)" column at [https://epostglobalshipping.com/service-updates/]
+   2. USPS list of sanctioned countries at [https://about.usps.com/publications/pub699/pub699_online_017.htm]
+   3. USPS Service Alerts, International service disruptions
+   [https://about.usps.com/newsroom/service-alerts/international/welcome.htm] . **NOTE**: this page has countries that only have limited and temporary shipping disruptions, so you have to evaluate these and not just copy them blindly.
+2. Paste them all into the `$countriesNamesToFindAlpha2CodesFor` array in the `LocationHelper` command (in src/Console/Commands/)
+3. Run the `LocationHelper` command and if there's country names for which an alpha2 code cannot be found, find the country details and add the incorrect name and proper alpha2 code together to the `$potentialAnswers` array.
+4. When `LocationHelper` successfully outputs a list of alpha2 codes for all countries, copy that list to config/location.php and replace the contents of the `countries-unable-to-ship-to` array with your new list of items.
+5. Commit and push changes, make and push a new tag.
+6. Update the version of this package in all applications.
 
 Use
 -------------
