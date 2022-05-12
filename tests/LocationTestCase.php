@@ -9,7 +9,7 @@ use Railroad\Location\Providers\LocationServiceProvider;
 class LocationTestCase extends BaseTestCase
 {
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -35,7 +35,7 @@ class LocationTestCase extends BaseTestCase
         $app->register(LocationServiceProvider::class);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
     }

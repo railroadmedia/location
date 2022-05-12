@@ -10,7 +10,7 @@ class LocationTest extends LocationTestCase
      */
     private $classBeingTested;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->classBeingTested = $this->app->make(LocationService::class);
