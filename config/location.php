@@ -38,6 +38,7 @@ return [
         'AF', # Afghanistan
         'BN', # Brunei Darussalam
         'BT', # Bhutan
+        'BY', # Belarus
         'CU', # Cuba
         'EC', # Ecuador
         'GN', # Guinea
@@ -47,7 +48,7 @@ return [
         'KP', # Korea (Democratic People's Republic of)
         'KY', # Cayman Islands
         'KZ', # Kazakhstan
-        'LA', # Lao People's Democratic Republic
+        'LA', # "Lao People's Democratic Republic", aka Laos
         'LY', # Libya
         'MQ', # Martinique
         'NI', # Nicaragua
@@ -58,8 +59,9 @@ return [
         'SD', # Sudan
         'SS', # South Sudan
         'SY', # Syrian Arab Republic
+        'TD', # Chad
         'TJ', # Tajikistan
-        'TL', # Timor-Leste
+        'TL', # "Timor-Leste", aka East Timor
         'TM', # Turkmenistan
         'UA', # Ukraine
         'YE', # Yemen
