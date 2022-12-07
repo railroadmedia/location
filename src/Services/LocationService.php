@@ -25,11 +25,11 @@ class LocationService
      */
     public function getCountry()
     {
-        if (!$this->session->has($this->getClientIp() . self::COUNTRY_SESSION_KEY)) {
+        if (!$this->session->has($this->getClientIpWithUnderscores() . self::COUNTRY_SESSION_KEY)) {
             $this->requestAndStoreLocation();
         }
 
-        return $this->session->get($this->getClientIp() . self::COUNTRY_SESSION_KEY);
+        return $this->session->get($this->getClientIpWithUnderscores() . self::COUNTRY_SESSION_KEY);
     }
 
     /** If the region name not exist on the session call the method that store data on session and return the region name
@@ -37,11 +37,11 @@ class LocationService
      */
     public function getRegion()
     {
-        if (!$this->session->has($this->getClientIp() . self::REGION_SESSION_KEY)) {
+        if (!$this->session->has($this->getClientIpWithUnderscores() . self::REGION_SESSION_KEY)) {
             $this->requestAndStoreLocation();
         }
 
-        return $this->session->get($this->getClientIp() . self::REGION_SESSION_KEY);
+        return $this->session->get($this->getClientIpWithUnderscores() . self::REGION_SESSION_KEY);
     }
 
     /** If the latitude not exist on the session call the method that store data on session and return the latitude
@@ -49,11 +49,11 @@ class LocationService
      */
     public function getLatitude()
     {
-        if (!$this->session->has($this->getClientIp() . self::LATITUDE_SESSION_KEY)) {
+        if (!$this->session->has($this->getClientIpWithUnderscores() . self::LATITUDE_SESSION_KEY)) {
             $this->requestAndStoreLocation();
         }
 
-        return $this->session->get($this->getClientIp() . self::LATITUDE_SESSION_KEY);
+        return $this->session->get($this->getClientIpWithUnderscores() . self::LATITUDE_SESSION_KEY);
     }
 
     /** If the longitude not exist on the session call the method that store data on session and return the longitude
@@ -61,11 +61,11 @@ class LocationService
      */
     public function getLongitude()
     {
-        if (!$this->session->has($this->getClientIp() . self::LONGITUDE_SESSION_KEY)) {
+        if (!$this->session->has($this->getClientIpWithUnderscores() . self::LONGITUDE_SESSION_KEY)) {
             $this->requestAndStoreLocation();
         }
 
-        return $this->session->get($this->getClientIp() . self::LONGITUDE_SESSION_KEY);
+        return $this->session->get($this->getClientIpWithUnderscores() . self::LONGITUDE_SESSION_KEY);
     }
 
     /** If the city not exist on the session call the method that store data on session and return the city
@@ -73,22 +73,22 @@ class LocationService
      */
     public function getCity()
     {
-        if (!$this->session->has($this->getClientIp() . self::CITY_SESSION_KEY)) {
+        if (!$this->session->has($this->getClientIpWithUnderscores() . self::CITY_SESSION_KEY)) {
             $this->requestAndStoreLocation();
         }
 
-        return $this->session->get($this->getClientIp() . self::CITY_SESSION_KEY);
+        return $this->session->get($this->getClientIpWithUnderscores() . self::CITY_SESSION_KEY);
     }
 
     public function getCurrency()
     {
-        if (!$this->session->has($this->getClientIp() . self::COUNTRY_CODE_SESSION_KEY)) {
+        if (!$this->session->has($this->getClientIpWithUnderscores() . self::COUNTRY_CODE_SESSION_KEY)) {
             $this->requestAndStoreLocation();
         }
 
         $currencies = json_decode(file_get_contents(__DIR__ . '/../../data/currencies.json'), true);
 
-        return $currencies[strtoupper($this->session->get($this->getClientIp() . self::COUNTRY_CODE_SESSION_KEY))] ?? null;
+        return $currencies[strtoupper($this->session->get($this->getClientIpWithUnderscores() . self::COUNTRY_CODE_SESSION_KEY))] ?? null;
     }
 
     /**
@@ -101,6 +101,7 @@ class LocationService
         }
 
         $ip = $this->getClientIp();
+        $ipWithUnderscores = $this->getClientIpWithUnderscores();
         $apiUrl = ConfigService::$apiDetails[ConfigService::$activeAPI]['url'] . $ip;
 
         if (empty($ip)) {
@@ -124,13 +125,13 @@ class LocationService
         curl_close($ch);
 
         if (array_key_exists(ConfigService::$apiDetails[ConfigService::$activeAPI]['latitudeKey'], $data)) {
-            $this->session->put($ip . self::COUNTRY_SESSION_KEY, $data[ConfigService::$apiDetails[ConfigService::$activeAPI]['countryKey']]);
-            $this->session->put($ip . self::REGION_SESSION_KEY, $data[ConfigService::$apiDetails[ConfigService::$activeAPI]['regionNameKey']]);
-            $this->session->put($ip . self::LATITUDE_SESSION_KEY, $data[ConfigService::$apiDetails[ConfigService::$activeAPI]['latitudeKey']]);
-            $this->session->put($ip . self::LONGITUDE_SESSION_KEY, $data[ConfigService::$apiDetails[ConfigService::$activeAPI]['longitudeKey']]);
-            $this->session->put($ip . self::COUNTRY_CODE_SESSION_KEY, $data[ConfigService::$apiDetails[ConfigService::$activeAPI]['countryCodeKey']]);
+            $this->session->put($ipWithUnderscores . self::COUNTRY_SESSION_KEY, $data[ConfigService::$apiDetails[ConfigService::$activeAPI]['countryKey']]);
+            $this->session->put($ipWithUnderscores . self::REGION_SESSION_KEY, $data[ConfigService::$apiDetails[ConfigService::$activeAPI]['regionNameKey']]);
+            $this->session->put($ipWithUnderscores . self::LATITUDE_SESSION_KEY, $data[ConfigService::$apiDetails[ConfigService::$activeAPI]['latitudeKey']]);
+            $this->session->put($ipWithUnderscores . self::LONGITUDE_SESSION_KEY, $data[ConfigService::$apiDetails[ConfigService::$activeAPI]['longitudeKey']]);
+            $this->session->put($ipWithUnderscores . self::COUNTRY_CODE_SESSION_KEY, $data[ConfigService::$apiDetails[ConfigService::$activeAPI]['countryCodeKey']]);
             if (array_key_exists('cityKey', ConfigService::$apiDetails[ConfigService::$activeAPI])) {
-                $this->session->put($ip . self::CITY_SESSION_KEY, $data[ConfigService::$apiDetails[ConfigService::$activeAPI]['cityKey']]);
+                $this->session->put($ipWithUnderscores . self::CITY_SESSION_KEY, $data[ConfigService::$apiDetails[ConfigService::$activeAPI]['cityKey']]);
             }
         }
     }
@@ -157,5 +158,10 @@ class LocationService
         }
 
         return explode(',', $ip)[0] ?? '';
+    }
+
+    public function getClientIpWithUnderscores()
+    {
+        return str_replace(['.', ':'], '_', $this->getClientIp());
     }
 }
